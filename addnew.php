@@ -1,3 +1,14 @@
+<?php
+session_start();
+ini_set("display_errors",0);
+$user = $_SESSION['username'];
+	if ($user == ""){
+		echo"<script>
+		window.location = 'index.php';
+		</script>";
+	}
+include("koneksi.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

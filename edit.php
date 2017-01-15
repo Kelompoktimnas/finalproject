@@ -1,4 +1,12 @@
 <?php
+session_start();
+ini_set("display_errors",0);
+$user = $_SESSION['username'];
+	if ($user == ""){
+		echo"<script>
+		window.location = 'index.php';
+		</script>";
+	}
 include("koneksi.php");
 ?>
 <!DOCTYPE html>
@@ -49,7 +57,7 @@ include("koneksi.php");
 				$userProfession	 = $_POST['userProfession'];
 				$userPic		 = $_POST['userPic'];
 				
-				$update = mysqli_query($koneksi, "UPDATE tbl_users SET userName='$userName', userProfession='$userProfession', userPic='$userPic', status='$status' WHERE userName='$userName'") or die(mysqli_error());
+				$update = mysqli_query($koneksi, "UPDATE tbl_users SET userName='$userName', userProfession='$userProfession', userPic='$userPic' WHERE userName='$userName'") or die(mysqli_error());
 				if($update){
 					header("Location: edit.php?userName=".$userName."&pesan=sukses");
 				}else{
@@ -59,6 +67,7 @@ include("koneksi.php");
 			
 			if(isset($_GET['pesan']) == 'sukses'){
 				echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Data berhasil disimpan.</div>';
+                header("refresh:5;beranda.php");
 			}
 			?>
 			<form class="form-horizontal" action="" method="post">
@@ -76,11 +85,11 @@ include("koneksi.php");
 				</div>
 				<div class="form-group">
 					<label class="col-sm-3 control-label">Foto Pemain</label>
-					<div class="col-sm-4">
-						<p><img src="user_images/<?php echo $userPic; ?>" height="150" width="150" /></p>
-        				<input class="input-group" type="file" name="user_image" accept="image/*" />
+					<tr>
+					<td><img src="user_images/<?php echo $row['userPic']; ?>" class="img-rounded" width="250px" height="250px" />
+				</tr>
+        				<input class="input-group" type="file" name="userPic" accept="image/*" />
 					</div>
-				</div>
 				
 				<!--<div class="form-group">
 					<label class="col-sm-3 control-label">Username</label>
